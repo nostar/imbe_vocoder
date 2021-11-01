@@ -58,6 +58,8 @@ public:
     // imbe_decode decodes IMBE codewords (frame_vector),
     // outputs the resulting 160 audio samples (snd)
     void imbe_decode(int16_t *frame_vector, int16_t *snd);
+	void encode_4400(int16_t *snd, uint8_t *imbe);
+	void decode_4400(int16_t *snd, uint8_t *imbe);
     const IMBE_PARAM* param(void);
 
 private:

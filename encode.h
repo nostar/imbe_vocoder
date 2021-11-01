@@ -27,6 +27,7 @@
 #if 0
 void encode_init(void);
 void encode(IMBE_PARAM *imbe_param, Word16 *frame_vector, Word16 *snd);
+void encode_4400(int16_t *pcm, uint8_t *imbe);
 #endif
 
 #endif

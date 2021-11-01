@@ -25,6 +25,7 @@
 #if 0
 void decode_init(IMBE_PARAM *imbe_param);
 void decode(IMBE_PARAM *imbe_param, Word16 *frame_vector, Word16 *snd);
+void decode_4400(int16_t *pcm, uint8_t *imbe);
 #endif
 #endif
 

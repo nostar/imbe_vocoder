@@ -35,6 +35,8 @@
 
 #include <cstring>
 
+const uint8_t  BIT_MASK_TABLE8[]  = { 0x80U, 0x40U, 0x20U, 0x10U, 0x08U, 0x04U, 0x02U, 0x01U };
+#define READ_BIT(p,i)     (p[(i)>>3] & BIT_MASK_TABLE8[(i)&7])
 
 
 void imbe_vocoder_impl::decode_init(IMBE_PARAM *imbe_param)
@@ -67,3 +69,44 @@ void imbe_vocoder_impl::decode(IMBE_PARAM *imbe_param, Word16 *frame_vector, Wor
 	for(j = 0; j < FRAME; j++)
 		snd[j] = add(snd[j], snd_tmp[j]);
 }
+
+void imbe_vocoder_impl::decode_4400(int16_t *snd, uint8_t *imbe)
+{
+	int16_t frame[8U] = {0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
+	unsigned int offset = 0U;
+
+	int16_t mask = 0x0800;
+	for (unsigned int i = 0U; i < 12U; i++, mask >>= 1, offset++)
+		frame[0U] |= READ_BIT(imbe, offset) != 0x00U ? mask : 0x0000;
+
+	mask = 0x0800;
+	for (unsigned int i = 0U; i < 12U; i++, mask >>= 1, offset++)
+		frame[1U] |= READ_BIT(imbe, offset) != 0x00U ? mask : 0x0000;
+
+	mask = 0x0800;
+	for (unsigned int i = 0U; i < 12U; i++, mask >>= 1, offset++)
+		frame[2U] |= READ_BIT(imbe, offset) != 0x00U ? mask : 0x0000;
+
+	mask = 0x0800;
+	for (unsigned int i = 0U; i < 12U; i++, mask >>= 1, offset++)
+		frame[3U] |= READ_BIT(imbe, offset) != 0x00U ? mask : 0x0000;
+
+	mask = 0x0400;
+	for (unsigned int i = 0U; i < 11U; i++, mask >>= 1, offset++)
+		frame[4U] |= READ_BIT(imbe, offset) != 0x00U ? mask : 0x0000;
+
+	mask = 0x0400;
+	for (unsigned int i = 0U; i < 11U; i++, mask >>= 1, offset++)
+		frame[5U] |= READ_BIT(imbe, offset) != 0x00U ? mask : 0x0000;
+
+	mask = 0x0400;
+	for (unsigned int i = 0U; i < 11U; i++, mask >>= 1, offset++)
+		frame[6U] |= READ_BIT(imbe, offset) != 0x00U ? mask : 0x0000;
+
+	mask = 0x0040;
+	for (unsigned int i = 0U; i < 7U; i++, mask >>= 1, offset++)
+		frame[7U] |= READ_BIT(imbe, offset) != 0x00U ? mask : 0x0000;
+
+	imbe_decode(frame, snd);
+}
+

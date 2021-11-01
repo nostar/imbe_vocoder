@@ -32,6 +32,8 @@ public:
 	void imbe_decode(int16_t *frame_vector, int16_t *snd) {
 		decode(&my_imbe_param, frame_vector, snd);
 	}
+	void encode_4400(int16_t *snd, uint8_t *imbe);
+	void decode_4400(int16_t *snd, uint8_t *imbe);
 	const IMBE_PARAM* param(void) {return &my_imbe_param;}
 private:
 	IMBE_PARAM my_imbe_param;
