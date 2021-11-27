@@ -10,4 +10,4 @@ make
 sudo make install
 sudo ldconfig
 ```
-There are example makefiles for andoird and windows.  Variables like compilers and paths to sdk/ndk may need to be modified for your environment.  On windows and andoird, make install is not used.  Instaed, manually place the libmbe_vocoder.a library in the correct location manually, and add a -L flag to your compiler flags if necessary.
+There are example makefiles for andoird and windows.  Variables like compilers and paths to sdk/ndk may need to be modified for your environment.  On windows and andoird, make install is not used.  Instead, manually place the libmbe_vocoder.a library in the correct location manually, and add a -L flag to your compiler flags if necessary.
